@@ -1,0 +1,47 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model TaskManagementApp.Models.TaskModel
+@{
+    ViewBag.Title = "Create Task";
+}
+
+<h2>Create Task</h2>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Title)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Status)
+        @Html.DropDownListFor(m => m.Status, new SelectList(new[] { "Pending", "In Progress", "Completed" }), "Select Status", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Deadline)
+        @Html.TextBoxFor(m => m.Deadline, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Priority)
+        @Html.DropDownListFor(m => m.Priority, new SelectList(new[] { "Low", "Medium", "High" }), "Select Priority", new { @class = "form-control" })
+    </div>
+
+
+
+    <button type="submit" class="btn btn-success">Save</button>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary ml-2" })
+}
